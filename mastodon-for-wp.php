@@ -147,5 +147,14 @@ function toot_published_post_for_mastodon($post_id){
 	}
 }
 
-add_action('publish_post', 'toot_published_post_for_mastodon');
+/* tootの是非をpostステータスの遷移で判断する */
+function on_transition_post_status($new_status, $old_status, $post){
+	if ($post->post_type === 'post' && $new_status === 'publish') {
+		if ($old_status !== 'private' && $old_status !== 'publish') {
+			toot_published_post_for_mastodon($post->ID);
+		}
+	}
+}
+
+add_action('transition_post_status', 'on_transition_post_status', 10, 3);
 ?>

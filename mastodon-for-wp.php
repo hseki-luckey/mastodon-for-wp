@@ -143,7 +143,7 @@ function toot_published_post_for_mastodon($post_id){
 
 	if($mastodon_post_flg){
 		$t = new \theCodingCompany\Mastodon();
-		$t->PostStatuses("新しい記事が公開されました！\n".get_permalink($post_id));
+		$t->PostStatuses(get_the_title($post_id)."\n".get_permalink($post_id));
 	}
 }
 
